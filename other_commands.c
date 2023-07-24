@@ -6,18 +6,18 @@
  */
 void exit_function(int argc, char *arguments[])
 {
-        int exit_status;
+	int exit_status;
 
-        printf("Exiting the shell.\n");
-        if (argc == 2)
-        {
-                exit_status = atoi(arguments[1]);
-                exit(exit_status);
-        }
-        else
-        {
-                exit(0);
-        }
+	printf("Exiting the shell.\n");
+	if (argc == 2)
+	{
+		exit_status = atoi(arguments[1]);
+		exit(exit_status);
+	}
+	else
+	{
+		exit(0);
+	}
 }
 
 /**
@@ -27,19 +27,19 @@ void exit_function(int argc, char *arguments[])
  */
 void cd_function(int argc, char *arguments[])
 {
-        if (argc == 1)
-        {
-                chdir(getenv("HOME"));
-        }
-        else if (argc == 2)
-        {
-                if (chdir(arguments[1]) != 0)
-                {
-                        perror("cd");
-                }
-        }
-        else
-        {
-                printf("cd: Too many arguments.\n");
-        }
+	if (argc == 1)
+	{
+		chdir(getenv("HOME"));
+	}
+	else if (argc == 2)
+	{
+		if (chdir(arguments[1]) != 0)
+		{
+			perror("cd");
+		}
+	}
+	else
+	{
+		printf("cd: Too many arguments.\n");
+	}
 }
