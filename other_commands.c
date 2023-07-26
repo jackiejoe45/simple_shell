@@ -8,7 +8,6 @@ void exit_function(int argc, char *arguments[])
 {
 	int exit_status;
 
-	printf("Exiting the shell.\n");
 	if (argc == 2)
 	{
 		exit_status = atoi(arguments[1]);
