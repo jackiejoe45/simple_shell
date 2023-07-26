@@ -9,6 +9,9 @@ void handle_args(char *command, char *arguments[], int *argc)
 {
 	char *token;
 
+	if (command[strlen(command) - 1] == '\n')
+		command[strlen(command) - 1] = '\0';
+
 	*argc = 0;
 	token = strtok(command, " ");
 
@@ -20,6 +23,25 @@ void handle_args(char *command, char *arguments[], int *argc)
 	arguments[*argc] = NULL;
 }
 
+/**
+ * strtrim - trims the string
+ * @str: string to trim
+ */
+void strtrim(char *str)
+{
+	int start = 0, end = strlen(str) - 1, i;
+
+	while (isspace(str[start]))
+		start++;
+
+	while ((end >= start) && isspace(str[end]))
+		end--;
+
+	for (i = start; i <= end; i++)
+		str[i - start] = str[i];
+
+	str[end - start + 1] = '\0';
+}
 
 /**
  * main - entry point
@@ -28,23 +50,19 @@ void handle_args(char *command, char *arguments[], int *argc)
 int main(void)
 {
 	char command[MAX_COMMAND_LENGTH], *arguments[MAX_ARGUMENTS];
-	char *comment_pos;
 	int argc;
 
-	while (1)
+	if (isatty(fileno(stdin)))
 	{
 		printf("$ ");
-		fflush(stdout);
+		fflush(stdout); }
+	while (1)
+	{
 		if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL)
 		{
-			printf("\n");
 			break; }
 
-		command[strcspn(command, "\n")] = '\0';
-		comment_pos = strchr(command, '#');
-		if (comment_pos != NULL)
-		{
-			*comment_pos = '\0'; }
+		strtrim(command);
 
 		handle_args(command, arguments, &argc);
 		if (argc > 0 && strcmp(arguments[0], "exit") == 0)
@@ -62,6 +80,9 @@ int main(void)
 		else
 		{
 			execute_builtin(arguments); }
-	}
+		if (isatty(fileno(stdin)))
+		{
+			printf("$ ");
+			fflush(stdout); } }
 	return (0);
 }
