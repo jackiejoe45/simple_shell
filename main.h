@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <ctype.h>
 
 void handle_args(char *command, char *arguments[], int *argc);
 void exit_function(int argc, char *arguments[]);
@@ -17,5 +18,8 @@ void cd_function(int argc, char *arguments[]);
 void setenv_function(int argc, char *arguments[]);
 void unsetenv_function(int argc, char *arguments[]);
 void execute_builtin(char *arguments[]);
+void strtrim(char *str);
+void remove_trailing_newline(char *str);
+
 
 #endif /* SHELL_H */
